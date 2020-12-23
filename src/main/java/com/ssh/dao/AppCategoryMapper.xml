@@ -11,15 +11,50 @@
     <result column="modifyBy" jdbcType="BIGINT" property="modifyby" />
     <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
   </resultMap>
+
+
   <sql id="Base_Column_List">
     id, categoryCode, categoryName, parentId, createdBy, creationTime, modifyBy, modifyDate
   </sql>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from app_category
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+
+  <select id="selectParentIdNull" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from app_category
+    where parentId is null
+  </select>
+
+  <select id="selectByParentId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from app_category
+    where parentId=#{parentId}
+  </select>
+
+  <select id="selectcategoryLevel2" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from app_category
+    where parentId in (1,2)
+  </select>
+
+  <select id="selectcategoryLevel3" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from app_category
+    where parentId not in (1,2)
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from app_category
     where id = #{id,jdbcType=BIGINT}

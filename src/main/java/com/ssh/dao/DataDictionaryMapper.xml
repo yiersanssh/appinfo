@@ -12,19 +12,34 @@
     <result column="modifyBy" jdbcType="BIGINT" property="modifyby" />
     <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
   </resultMap>
+
+
   <sql id="Base_Column_List">
     id, typeCode, typeName, valueId, valueName, createdBy, creationDate, modifyBy, modifyDate
   </sql>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from data_dictionary
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="getDicList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from data_dictionary
+    where typeName=#{typeName}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from data_dictionary
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
+
+
   <insert id="insert" parameterType="com.ssh.domain.DataDictionary">
     insert into data_dictionary (id, typeCode, typeName, 
       valueId, valueName, createdBy, 

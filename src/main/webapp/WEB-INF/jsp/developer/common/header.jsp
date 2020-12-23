@@ -34,6 +34,7 @@
 	<!-- add localcss 2016-8-18 -->
 	<link href='statics/localcss/appinfoadd.css' rel='stylesheet'>
 	<link href='statics/localcss/appinfolist.css' rel='stylesheet'>
+	<script type="text/javascript" src="statics/js/jquery-1.8.3.min.js"></script>
 
 
 
@@ -86,7 +87,7 @@
 										class="fa fa-chevron-down"></span>
 								</a>
 									<ul class="nav child_menu">
-										<li><a href="/dev/flatform/app/list">APP维护</a>
+										<li><a href="dev/flatform/app/list">APP维护</a>
 										</li>
 									</ul></li>
 							</ul>

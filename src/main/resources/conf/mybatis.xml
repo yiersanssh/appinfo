@@ -12,6 +12,13 @@
         <package name="com.ssh.domain"/>
     </typeAliases>
 
+
+    <plugins>
+        <!-- com.github.pagehelper为PageHelper类所在包名 -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+        </plugin>
+    </plugins>
+
     <mappers>
         <!--name是包名，包中所有mapper.xml一次都能加载-->
         <package name="com.ssh.dao"/>

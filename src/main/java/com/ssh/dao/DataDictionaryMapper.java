@@ -2,6 +2,8 @@ package com.ssh.dao;
 
 import com.ssh.domain.DataDictionary;
 
+import java.util.List;
+
 public interface DataDictionaryMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,6 @@ public interface DataDictionaryMapper {
     int updateByPrimaryKeySelective(DataDictionary record);
 
     int updateByPrimaryKey(DataDictionary record);
+
+    List<DataDictionary> getDicList(String typeName);
 }

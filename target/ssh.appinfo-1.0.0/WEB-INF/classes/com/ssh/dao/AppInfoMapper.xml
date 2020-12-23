@@ -26,23 +26,84 @@
     <result column="logoPicPath" jdbcType="VARCHAR" property="logopicpath" />
     <result column="logoLocPath" jdbcType="VARCHAR" property="logolocpath" />
     <result column="versionId" jdbcType="BIGINT" property="versionid" />
+    <result column="flatformName" jdbcType="VARCHAR" property="flatformname" />
+    <result column="categoryLevel1Name" jdbcType="VARCHAR" property="categorylevel1name" />
+    <result column="categoryLevel2Name" jdbcType="VARCHAR" property="categorylevel2name" />
+    <result column="categoryLevel3Name" jdbcType="VARCHAR" property="categorylevel3name" />
+    <result column="statusName" jdbcType="VARCHAR" property="statusname" />
+    <result column="versionNo" jdbcType="VARCHAR" property="versionno" />
+
   </resultMap>
+
+
   <sql id="Base_Column_List">
     id, softwareName, APKName, supportROM, interfaceLanguage, softwareSize, updateDate, 
     devId, appInfo, status, onSaleDate, offSaleDate, flatformId, categoryLevel3, downloads, 
     createdBy, creationDate, modifyBy, modifyDate, categoryLevel1, categoryLevel2, logoPicPath, 
     logoLocPath, versionId
   </sql>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from app_info
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="selectAPKNameExist" resultType="int">
+    select count(*)
+    from app_info
+    where APKName=#{APKName}
+  </select>
+
+
+
+
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    select
+    a.id,softwareName,APKName,softwareSize,f.valueName as flatformName,categoryLevel1Name,categoryLevel2Name,categoryLevel3Name,s.valueName as statusName,downloads,versionNo,
+    status,versionid
+    from app_info a
+    left join (select * from data_dictionary where typeName='所属平台') f
+    on a.flatformId=f.valueId
+    left join (select * from data_dictionary where typeName='APP状态') s
+    on a.status=s.valueId
+    left join (select id,categoryName as categoryLevel1Name from app_category where parentId is NULL) c1
+    on a.categoryLevel1=c1.id
+    left join (select id,categoryName as categoryLevel2Name from app_category where parentId IN (1,2)) c2
+    on a.categoryLevel2=c2.id
+    left join (select id,categoryName as categoryLevel3Name from app_category where parentId not IN (1,2)) c3
+    on a.categoryLevel3=c3.id
+    left join app_version v
+    on a.versionId=v.id
+    <where>
+      <if test="softwarename!=null and softwarename!=''">
+        and softwareName like '%' #{softwarename} '%'
+      </if>
+      <if test="status!=null and status!=''">
+        and status=#{status}
+      </if>
+      <if test="flatformid!=null and flatformid!=''">
+        and flatformId=#{flatformid}
+      </if>
+      <if test="categorylevel1!=null and categorylevel1!=''">
+        and CategoryLevel1=#{categorylevel1}
+      </if>
+      <if test="categorylevel2!=null and categorylevel2!=''">
+        and CategoryLevel2=#{categorylevel2}
+      </if>
+      <if test="categorylevel3!=null and categorylevel3!=''">
+        and CategoryLevel3=#{categorylevel3}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from app_info
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
   <insert id="insert" parameterType="com.ssh.domain.AppInfo">
     insert into app_info (id, softwareName, APKName, 
       supportROM, interfaceLanguage, softwareSize, 
@@ -63,6 +124,7 @@
       #{logopicpath,jdbcType=VARCHAR}, #{logolocpath,jdbcType=VARCHAR}, #{versionid,jdbcType=BIGINT}
       )
   </insert>
+
   <insert id="insertSelective" parameterType="com.ssh.domain.AppInfo">
     insert into app_info
     <trim prefix="(" suffix=")" suffixOverrides=",">

@@ -21,10 +21,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class APPInfoController {
@@ -162,7 +160,7 @@ public class APPInfoController {
             String fileName = pic.getOriginalFilename();
 
             //获取项目路径
-            String realPath = request.getServletContext().getRealPath("/");
+            String realPath = request.getServletContext().getRealPath("/");//E:\IdeaProject\AppProject\appinfo\target\ssh.appinfo-1.0.0\
             System.out.println("===="+realPath);
 
             //存哪里
@@ -179,7 +177,9 @@ public class APPInfoController {
             appInfo.setDevid(devUser.getId());
             appInfo.setCreatedby(devUser.getId());
             //获取pic路径
-            String picPath = path.substring(path.indexOf("appinfo"));//appinfo\target\ssh.appinfo-1.0.0\statics/uploadfiles/xxx.jpg
+            String picPath = path.substring(path.indexOf("statics"));//statics/uploadfiles/xxx.jpg
+            String projectName = request.getContextPath()+"/";// /app/
+            picPath = projectName+picPath;//  /app/statics/uploadfiles/xxx.jpg
             appInfo.setLogopicpath(picPath);
             //将数据保存到数据库中
             appService.addAppInfo(appInfo);
@@ -194,27 +194,104 @@ public class APPInfoController {
 
 
 
+    @RequestMapping("/appinfomodify")
+    public ModelAndView appInfoModify(Long id){
+        ModelAndView mv = new ModelAndView();
 
-    /*@RequestMapping("/picInfo")
+        AppInfo appInfo = appService.selectAppInfoById(id);
+        mv.addObject("appInfo",appInfo);
+        mv.setViewName("developer/appinfomodify");
+        return mv;
+    }
+
+
+
+    @RequestMapping("delfile")
     @ResponseBody
-    public Map<String,Object> picInfo(MultipartFile pic){
+    public Map<String,Object> delfile(Long id,String logo){
         Map<String,Object> map = new HashMap<>();
-        Long size = pic.getSize();
-        String suffix = pic.getName().substring(pic.getName().lastIndexOf("."));
-        if (size>50*1024){
-            map.put("success","false");
-            map.put("msg","文件过大");
-        }else {
-            if (!"jpg".equals(suffix)&&!"jpeg".equals(suffix)&&!"png".equals(suffix)){
-                map.put("success","false");
-                map.put("msg","文件格式需要jpg、jpeg、png");
-            }else {
-                map.put("success","true");
-                map.put("msg","文件可用");
-            }
-        }
-        return map;
-    }*/
 
+        //根据id查单条
+        AppInfo appInfo = appService.selectAppInfoById(id);
+
+        //图片路径
+        String path = appInfo.getLogolocpath();
+        File pic = new File(path);
+        if (pic!=null){
+            pic.delete();
+            //将数据库中两个图片的地址全部清空
+            appService.updataAppInfoLogo(id);
+            map.put("result","success");
+
+        }else {
+            map.put("result","failed");
+        }
+
+        return map;
+    }
+
+
+
+
+
+    @RequestMapping("/appinfomodifysave")
+    public String appInfoModifySave(HttpServletRequest request , AppInfo appInfo,@RequestParam("attach") MultipartFile pic){
+
+        //修改Appinfo操作
+        //判断是否有修改过照片
+        if (pic==null||"".equals(pic)){
+            //如果没修改则继续使用之前的图片路径
+            DevUser devUser = (DevUser) request.getSession().getAttribute("devUserSession");
+            appInfo.setModifyby(devUser.getId());
+
+            appInfo.setModifydate(new Date());
+            appService.updataAppInfo(appInfo);
+
+
+        }else {
+            //如果修改过了则使用修改后的图片路径
+
+            try {
+                //获取文件名
+                String fileName = pic.getOriginalFilename();
+
+                //获取项目路径
+                String realPath = request.getServletContext().getRealPath("/");//E:\IdeaProject\AppProject\appinfo\target\ssh.appinfo-1.0.0\
+                System.out.println("===="+realPath);
+
+                //存哪里
+                String path = realPath+"statics/uploadfiles/"+fileName;
+                System.out.println(path);//E:\IdeaProject\AppProject\appinfo\target\ssh.appinfo-1.0.0\statics/uploadfiles/1608638570(1).jpg
+
+                //上传
+                File targetFile = new File(path);
+                pic.transferTo(targetFile);
+                //商品文本的数据保存到数据库中
+                appInfo.setLogolocpath(path);
+                DevUser devUser = (DevUser) request.getSession().getAttribute("devUserSession");
+                appInfo.setModifyby(devUser.getId());
+
+                appInfo.setModifydate(new Date());
+
+                //获取pic路径
+                String picPath = path.substring(path.indexOf("statics"));//statics/uploadfiles/xxx.jpg
+                String projectName = request.getContextPath()+"/";// /app/
+                picPath = projectName+picPath;//  /app/statics/uploadfiles/xxx.jpg
+                appInfo.setLogopicpath(picPath);
+                //将数据保存到数据库中
+                appService.updataAppInfo(appInfo);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+
+
+        return "redirect:dev/flatform/app/list";
+    }
 
 }

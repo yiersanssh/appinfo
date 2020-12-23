@@ -15,4 +15,10 @@ public interface AppService {
     boolean selectAPKNameExist(String apkName);
 
     void addAppInfo(AppInfo appInfo);
+
+    AppInfo selectAppInfoById(Long id);
+
+    void updataAppInfoLogo(Long id);
+
+    void updataAppInfo(AppInfo appInfo);
 }

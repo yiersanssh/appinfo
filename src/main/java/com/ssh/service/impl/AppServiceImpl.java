@@ -47,4 +47,24 @@ public class AppServiceImpl implements AppService {
     public void addAppInfo(AppInfo appInfo) {
         appInfoMapper.insertSelective(appInfo);
     }
+
+    @Override
+    public AppInfo selectAppInfoById(Long id) {
+        AppInfo appInfo = appInfoMapper.selectAppInfoById(id);
+        return appInfo;
+    }
+
+    @Override
+    public void updataAppInfoLogo(Long id) {
+        AppInfo appInfo = new AppInfo();
+        appInfo.setId(id);
+        appInfo.setLogopicpath("");
+        appInfo.setLogolocpath("");
+        appInfoMapper.updateByPrimaryKeySelective(appInfo);
+    }
+
+    @Override
+    public void updataAppInfo(AppInfo appInfo) {
+        appInfoMapper.updateByPrimaryKeySelective(appInfo);
+    }
 }

@@ -99,6 +99,22 @@
     </where>
   </select>
 
+  <select id="selectAppInfoById" resultMap="BaseResultMap">
+    select
+    a.id, softwareName, APKName, supportROM, interfaceLanguage, softwareSize, updateDate,
+    devId, appInfo, status, onSaleDate, offSaleDate, flatformId, categoryLevel3, downloads,
+    a.createdBy, a.creationDate, a.modifyBy, a.modifyDate, categoryLevel1, categoryLevel2, logoPicPath,
+    logoLocPath, versionId, valueName as statusname
+    from app_info a
+    left join (select * from data_dictionary where typeName='APP状态') d
+    on a.status = d.valueId
+    where a.id=#{id}
+  </select>
+
+
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from app_info
     where id = #{id,jdbcType=BIGINT}

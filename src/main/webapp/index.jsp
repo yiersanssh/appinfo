@@ -20,7 +20,7 @@
     <!-- NProgress -->
     <link href="statics/css/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="https://colorlib.com/polygon/gentelella/css/animate.min.css" rel="stylesheet">
+    <%--<link href="https://colorlib.com/polygon/gentelella/css/animate.min.css" rel="stylesheet">--%>
 
     <!-- Custom Theme Style -->
     <link href="statics/css/custom.min.css" rel="stylesheet">

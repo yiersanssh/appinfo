@@ -21,4 +21,6 @@ public interface AppInfoMapper {
     List<AppInfo> selectByCondition(AppInfo appinfo);
 
     int selectAPKNameExist(String APKName);
+
+    AppInfo selectAppInfoById(Long id);
 }

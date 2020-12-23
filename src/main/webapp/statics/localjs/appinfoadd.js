@@ -134,8 +134,8 @@ $(function(){
 		var suffix = file.files[0].name.substring(file.files[0].name.lastIndexOf("."));
 
 
-		var maxSize = 50*1024;
-		if (file.files[0].size>50*1024){
+		var maxSize = 500*1024;
+		if (file.files[0].size>maxSize){
 			$("#a_logoPicPathSpan").css("color","red")
 			$("#a_logoPicPathSpan").html("文件过大")
 		}else {
@@ -149,32 +149,6 @@ $(function(){
 				//alert($("#a_logoPicPathSpan").css("color"))
 			}
 		}
-
-
-
-		/*$.ajax({
-			url:"picInfo",
-			data:{
-				a_logoPicPath:$("#a_logoPicPath").val()
-			},
-			type:"get",
-			dataType:"json",
-			success:function (data) {
-				/!*
-					data
-					{ok:true/false
-						msg:图片太大/图片格式必须为jpg,}
-				*!/
-				if (data.ok){
-					$("#a_logoPicPathSpan").css("color","green");
-					$("#a_logoPicPathSpan").html("图片可用")
-				}else {
-					$("#a_logoPicPathSpan").css("color","red");
-					$("#a_logoPicPathSpan").html(data.msg);
-				}
-
-			}
-		})*/
 	})
 
 });

@@ -58,14 +58,14 @@
 						<tbody>
 							<c:forEach var="appVersion" items="${appVersionList }" varStatus="status">
 								<tr role="row" class="odd">
-									<td tabindex="0" class="sorting_1">${appVersion.appName}</td>
-									<td>${appVersion.versionNo }</td>
-									<td>${appVersion.versionSize }</td>
-									<td>${appVersion.publishStatusName }</td>
+									<td tabindex="0" class="sorting_1">${appVersion.appname}</td>
+									<td>${appVersion.versionno }</td>
+									<td>${appVersion.versionsize }</td>
+									<td>${appVersion.publishstatusname }</td>
 									<td>
-									<a href="${appVersion.downloadLink }">${appVersion.apkFileName }</a>
+									<a href="${appVersion.downloadlink }">${appVersion.apkfilename }</a>
 									</td>
-									<td><fmt:formatDate value="${appVersion.modifyDate }" pattern="yyyy-MM-dd"/></td>
+									<td><fmt:formatDate value="${appVersion.modifydate }" pattern="yyyy-MM-dd"/></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -84,30 +84,30 @@
         </div>
         <div class="x_content" style="display: block;">
          <br>
-        <form class="form-horizontal form-label-left" action="addversionsave" method="post" enctype="multipart/form-data">
-           <input type="hidden" name="appId" name="appId" value="${appVersion.appId}">
+        <form id="addversionForm" class="form-horizontal form-label-left" action="addversionsave" method="post" enctype="multipart/form-data">
+           <input type="hidden" id="appid"  name="appid" value="${appId}">
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">版本号 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input id="versionNo" class="form-control col-md-7 col-xs-12" 
-               data-validate-length-range="20" data-validate-words="1" name="versionNo"  
-               placeholder="请输入版本号" type="text"  required="required">
+               data-validate-length-range="20" data-validate-words="1" name="versionno"
+               placeholder="请输入版本号" type="text"  required="required"><span id="versionNoSpan"></span>
             </div>
           </div>
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">版本大小 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="number" id="versionSize" name="versionSize"  required="required"
-              data-validate-minmax="10,500"  placeholder="请输入版本大小，单位为Mb" class="form-control col-md-7 col-xs-12">
+              <input type="number" id="versionSize" name="versionsize"  required="required"
+              data-validate-minmax="10,500"  placeholder="请输入版本大小，单位为Mb" class="form-control col-md-7 col-xs-12"><span id="versionSizeSpan"></span>
             </div>
           </div>
        
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">发布状态 <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="hidden" name="publishStatus" id="publishStatus" value="3">预发布
+              <input type="hidden" name="publishstatus" id="publishStatus" value="3">预发布
             </div>
           </div>
         
@@ -115,22 +115,22 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">版本简介 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea id="versionInfo" name="versionInfo" required="required"
-              placeholder="请输入本版本的相关信息，本信息作为该版本的详细信息进行版本介绍。" class="form-control col-md-7 col-xs-12"></textarea>
+              <textarea id="versionInfo" name="versioninfo" required="required"
+              placeholder="请输入本版本的相关信息，本信息作为该版本的详细信息进行版本介绍。" class="form-control col-md-7 col-xs-12"></textarea><span id="versionInfoSpan"></span>
             </div>
           </div>
            <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">apk文件 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="file" class="form-control col-md-7 col-xs-12" name="a_downloadLink" id="a_downloadLink"  required="required"/>
+            <input type="file" class="form-control col-md-7 col-xs-12" name="a_downloadLink" id="a_downloadLink"  required="required"/><span id="a_downloadLinkSpan"></span>
             ${fileUploadError }
             </div>
           </div>
           <div class="ln_solid"></div>
           <div class="form-group">
             <div class="col-md-6 col-md-offset-3">
-              <button id="send" type="submit" class="btn btn-success">保存</button>
+              <button id="send" type="button" class="btn btn-success">保存</button>
               <button type="button" class="btn btn-primary" id="back">返回</button>
             </div>
           </div>
@@ -141,4 +141,4 @@
   </div>
 </div>
 <%@include file="common/footer.jsp"%>
-<script src="/statics/localjs/appversionadd.js"></script>
+<script src="statics/localjs/appversionadd.js"></script>

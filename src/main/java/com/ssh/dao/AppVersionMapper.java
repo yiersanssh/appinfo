@@ -2,6 +2,8 @@ package com.ssh.dao;
 
 import com.ssh.domain.AppVersion;
 
+import java.util.List;
+
 public interface AppVersionMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,8 @@ public interface AppVersionMapper {
     int updateByPrimaryKeySelective(AppVersion record);
 
     int updateByPrimaryKey(AppVersion record);
+
+    List<AppVersion> selectAppVersionList(String id);
+
+    AppVersion selectByPath(String apkLocPath);
 }

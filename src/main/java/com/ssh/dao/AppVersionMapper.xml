@@ -15,21 +15,55 @@
     <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
     <result column="apkLocPath" jdbcType="VARCHAR" property="apklocpath" />
     <result column="apkFileName" jdbcType="VARCHAR" property="apkfilename" />
+    <result column="appName" jdbcType="VARCHAR" property="appname" />
+    <result column="publishStatusName" jdbcType="VARCHAR" property="publishstatusname" />
   </resultMap>
+
+
+
   <sql id="Base_Column_List">
     id, appId, versionNo, versionInfo, publishStatus, downloadLink, versionSize, createdBy, 
     creationDate, modifyBy, modifyDate, apkLocPath, apkFileName
   </sql>
+
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from app_version
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+
+  <select id="selectAppVersionList" resultMap="BaseResultMap">
+    select
+    av.id, appId, versionNo, versionInfo, publishStatus, downloadLink, versionSize, av.createdBy,
+    av.creationDate, av.modifyBy, av.modifyDate, apkLocPath, apkFileName,ai.softwareName as appName,d.valueName as publishStatusName
+    from app_version av
+    join app_info ai
+    on av.appId=ai.id
+    join (select * from data_dictionary where typeName='发布状态') d
+    on av.publishStatus=d.valueId
+    where appId=#{id}
+  </select>
+
+
+<select id="selectByPath" resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List" />
+  from app_version
+  where apkLocPath=#{apkLocPath}
+
+</select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from app_version
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
+
   <insert id="insert" parameterType="com.ssh.domain.AppVersion">
     insert into app_version (id, appId, versionNo, 
       versionInfo, publishStatus, downloadLink, 
@@ -42,6 +76,7 @@
       #{modifyby,jdbcType=BIGINT}, #{modifydate,jdbcType=TIMESTAMP}, #{apklocpath,jdbcType=VARCHAR}, 
       #{apkfilename,jdbcType=VARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="com.ssh.domain.AppVersion">
     insert into app_version
     <trim prefix="(" suffix=")" suffixOverrides=",">

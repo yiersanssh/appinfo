@@ -2,6 +2,7 @@ package com.ssh.service;
 
 import com.ssh.domain.AppCategory;
 import com.ssh.domain.AppInfo;
+import com.ssh.domain.AppVersion;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,4 +22,8 @@ public interface AppService {
     void updataAppInfoLogo(Long id);
 
     void updataAppInfo(AppInfo appInfo);
+
+    List<AppVersion> selectAppVersionList(String id);
+
+    void insertAppVersion(AppVersion appVersion);
 }

@@ -20,4 +20,6 @@ public interface AppVersionMapper {
     List<AppVersion> selectAppVersionList(String id);
 
     AppVersion selectByPath(String apkLocPath);
+
+
 }

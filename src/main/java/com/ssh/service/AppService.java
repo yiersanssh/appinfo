@@ -32,4 +32,8 @@ public interface AppService {
     void updataAppVersionApk(Long id);
 
     void updataAppVersion(AppVersion appVersion);
+
+    AppInfo selectAppInfoMessage(Long id);
+
+
 }

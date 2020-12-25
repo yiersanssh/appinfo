@@ -2,10 +2,7 @@ package com.ssh.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.ssh.domain.AppCategory;
-import com.ssh.domain.AppInfo;
-import com.ssh.domain.DataDictionary;
-import com.ssh.domain.DevUser;
+import com.ssh.domain.*;
 import com.ssh.service.AppService;
 import com.ssh.service.DicService;
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Appinfo;
@@ -287,11 +284,25 @@ public class APPInfoController {
             }
 
         }
-
-
-
-
         return "redirect:dev/flatform/app/list";
+    }
+
+
+
+
+    @RequestMapping("/appview")
+    public ModelAndView appview(Long id){
+        ModelAndView mv = new ModelAndView();
+        //查appinfo基本信息
+        AppInfo appInfo = appService.selectAppInfoMessage(id);
+        mv.addObject("appInfo",appInfo);
+
+        //查所有版本信息
+        String appId = String.valueOf(id);
+        List<AppVersion> appVersionList = appService.selectAppVersionList(appId);
+        mv.addObject("appVersionList",appVersionList);
+        mv.setViewName("developer/appinfoview");
+        return mv;
     }
 
 }

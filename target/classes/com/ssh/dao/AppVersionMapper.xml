@@ -49,6 +49,8 @@
   </select>
 
 
+
+
 <select id="selectByPath" resultMap="BaseResultMap">
   select
   <include refid="Base_Column_List" />

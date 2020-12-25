@@ -58,6 +58,27 @@
   </select>
 
 
+  <select id="selectAppInfoMessage" resultMap="BaseResultMap">
+    select
+    a.id,softwareName,APKName,supportROM,interfaceLanguage,softwareSize,downloads,
+    d1.valueName as flatformName,ac1.categoryName as categoryLevel1Name,ac2.categoryName as categoryLevel2Name,ac3.categoryName as categoryLevel3Name,d2.valueName as statusName,
+    appInfo,logoPicPath
+    from app_info a
+    left join (select * from data_dictionary where typeName='所属平台') d1
+    on a.flatformId=d1.valueId
+    left join (select * from data_dictionary where typeName='APP状态') d2
+    on a.status=d2.valueId
+    left join (select * from app_category where parentId is null ) ac1
+    on a.categoryLevel1=ac1.id
+    left join (select * from app_category where parentId in (1,2) ) ac2
+    on a.categoryLevel2=ac2.id
+    left join (select * from app_category where parentId not in (1,2) ) ac3
+    on a.categoryLevel3=ac3.id
+    where a.id=#{id}
+  </select>
+
+
+
 
 
   <select id="selectByCondition" resultMap="BaseResultMap">

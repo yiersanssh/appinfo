@@ -119,4 +119,15 @@ public class AppServiceImpl implements AppService {
     public void updataAppVersion(AppVersion appVersion) {
         appVersionMapper.updateByPrimaryKeySelective(appVersion);
     }
+
+    @Override
+    public AppInfo selectAppInfoMessage(Long id) {
+
+        AppInfo appInfo = appInfoMapper.selectAppInfoMessage(id);
+
+
+        return appInfo;
+    }
+
+
 }

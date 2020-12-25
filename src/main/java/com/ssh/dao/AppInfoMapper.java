@@ -23,4 +23,6 @@ public interface AppInfoMapper {
     int selectAPKNameExist(String APKName);
 
     AppInfo selectAppInfoById(Long id);
+
+    AppInfo selectAppInfoMessage(Long id);
 }

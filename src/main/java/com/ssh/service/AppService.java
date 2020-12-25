@@ -26,4 +26,10 @@ public interface AppService {
     List<AppVersion> selectAppVersionList(String id);
 
     void insertAppVersion(AppVersion appVersion);
+
+    AppVersion selectAppVersion(Long vid);
+
+    void updataAppVersionApk(Long id);
+
+    void updataAppVersion(AppVersion appVersion);
 }

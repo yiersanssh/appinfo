@@ -95,4 +95,28 @@ public class AppServiceImpl implements AppService {
         appInfo.setVersionid(appVersion1.getId());
         appInfoMapper.updateByPrimaryKeySelective(appInfo);
     }
+
+    @Override
+    public AppVersion selectAppVersion(Long vid) {
+
+        AppVersion appVersion = appVersionMapper.selectByPrimaryKey(vid);
+
+
+        return appVersion;
+    }
+
+    @Override
+    public void updataAppVersionApk(Long id) {
+        AppVersion appVersion = new AppVersion();
+        appVersion.setId(id);
+        appVersion.setDownloadlink("");
+        appVersion.setApklocpath("");
+        appVersion.setApkfilename("");
+        appVersionMapper.updateByPrimaryKeySelective(appVersion);
+    }
+
+    @Override
+    public void updataAppVersion(AppVersion appVersion) {
+        appVersionMapper.updateByPrimaryKeySelective(appVersion);
+    }
 }

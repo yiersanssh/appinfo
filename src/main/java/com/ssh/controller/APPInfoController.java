@@ -177,7 +177,7 @@ public class APPInfoController {
             appInfo.setDevid(devUser.getId());
             appInfo.setCreatedby(devUser.getId());
             //获取pic路径
-            String picPath = path.substring(path.indexOf("statics"));//statics/uploadfiles/xxx.jpg
+            String picPath = path.substring(path.indexOf("statics"));//  statics/uploadfiles/xxx.jpg
             String projectName = request.getContextPath()+"/";// /app/
             picPath = projectName+picPath;//  /app/statics/uploadfiles/xxx.jpg
             appInfo.setLogopicpath(picPath);
@@ -236,10 +236,10 @@ public class APPInfoController {
 
     @RequestMapping("/appinfomodifysave")
     public String appInfoModifySave(HttpServletRequest request , AppInfo appInfo,@RequestParam("attach") MultipartFile pic){
-
+        String fileName = pic.getOriginalFilename();
         //修改Appinfo操作
         //判断是否有修改过照片
-        if (pic==null||"".equals(pic)){
+        if ("".equals(fileName)){
             //如果没修改则继续使用之前的图片路径
             DevUser devUser = (DevUser) request.getSession().getAttribute("devUserSession");
             appInfo.setModifyby(devUser.getId());
@@ -253,7 +253,7 @@ public class APPInfoController {
 
             try {
                 //获取文件名
-                String fileName = pic.getOriginalFilename();
+                fileName = pic.getOriginalFilename();
 
                 //获取项目路径
                 String realPath = request.getServletContext().getRealPath("/");//E:\IdeaProject\AppProject\appinfo\target\ssh.appinfo-1.0.0\

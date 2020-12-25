@@ -36,4 +36,5 @@ public interface AppService {
     AppInfo selectAppInfoMessage(Long id);
 
 
+    int deleteAppinfo(Long id);
 }

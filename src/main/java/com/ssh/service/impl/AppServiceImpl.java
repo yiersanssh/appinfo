@@ -129,5 +129,25 @@ public class AppServiceImpl implements AppService {
         return appInfo;
     }
 
+    @Override
+    @Transactional
+    public int deleteAppinfo(Long id) {
+        int flag = 0;
+        //先查出这个app有多个版本
+        Integer count = appVersionMapper.selectCount(id);
+        //在删除这些版本信息
+        Integer versionCount = appVersionMapper.deleteByAppid(id);
+        //在删除对应的appinfo信息
+        Integer appCount = appInfoMapper.deleteByPrimaryKey(id);
+        if (count==versionCount && appCount==1){
+            flag = 1;
+        }else if (count==0&&appCount==0){
+            flag = 3;
+        }else {
+            flag = 2;
+        }
+        return flag;
+    }
+
 
 }

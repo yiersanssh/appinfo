@@ -22,4 +22,7 @@ public interface AppVersionMapper {
     AppVersion selectByPath(String apkLocPath);
 
 
+    Integer selectCount(Long id);
+
+    Integer deleteByAppid(Long id);
 }

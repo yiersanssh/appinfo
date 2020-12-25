@@ -305,4 +305,22 @@ public class APPInfoController {
         return mv;
     }
 
+
+
+    @RequestMapping("/delapp")
+    @ResponseBody
+    public Map<String,Object> deleteApp(Long id){
+        Map<String,Object> map = new HashMap<>();
+        int flag = appService.deleteAppinfo(id);
+        if (flag==1){
+            map.put("delResult",true);
+        }else if (flag==2){
+            map.put("delResult",false);
+        }else if (flag==3){
+            map.put("delResult","notexist");
+        }
+
+        return map;
+    }
+
 }

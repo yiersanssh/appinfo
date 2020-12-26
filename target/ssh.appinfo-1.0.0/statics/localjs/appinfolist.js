@@ -92,7 +92,7 @@ $(".modifyAppInfo").on("click",function(){
 	}
 });
 
-$(document).on("click",".saleSwichOpen,.saleSwichClose",function(){
+$(document).on("click",".saleSwitchOpen,.saleSwitchClose",function(){
 	var obj = $(this);
 	var appinfoid = obj.attr("appinfoid");
 	var saleSwitch = obj.attr("saleSwitch");
@@ -107,8 +107,8 @@ $(document).on("click",".saleSwichOpen,.saleSwichClose",function(){
 
 var saleSwitchAjax = function(appId,obj){
 	$.ajax({
-		type:"PUT",
-		url:appId+"/sale.json",
+		type:"post",
+		url:"sale?id="+appId,
 		dataType:"json",
 		success:function(data){
 			/*
@@ -122,7 +122,7 @@ var saleSwitchAjax = function(appId,obj){
 					if("open" === obj.attr("saleSwitch")){
 						//alert("恭喜您，【"+obj.attr("appsoftwarename")+"】的【上架】操作成功");
 						$("#appInfoStatus" + obj.attr("appinfoid")).html("已上架");
-						obj.className="saleSwichClose";
+						obj.className="saleSwitchClose";
 						obj.html("下架");
 						obj.attr("saleSwitch","close");
 						$("#appInfoStatus" + obj.attr("appinfoid")).css({
@@ -136,7 +136,7 @@ var saleSwitchAjax = function(appId,obj){
 					}else if("close" === obj.attr("saleSwitch")){
 						//alert("恭喜您，【"+obj.attr("appsoftwarename")+"】的【下架】操作成功");
 						$("#appInfoStatus" + obj.attr("appinfoid")).html("已下架");
-						obj.className="saleSwichOpem";
+						obj.className="saleSwitchOpem";
 						obj.html("上架");
 						obj.attr("saleSwitch","open");
 						$("#appInfoStatus" + obj.attr("appinfoid")).css({

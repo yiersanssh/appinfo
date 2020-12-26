@@ -3,6 +3,7 @@ package com.ssh.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ssh.domain.*;
+import com.ssh.exception.SaleException;
 import com.ssh.service.AppService;
 import com.ssh.service.DicService;
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Appinfo;
@@ -321,6 +322,52 @@ public class APPInfoController {
         }
 
         return map;
+    }
+
+
+
+    @RequestMapping("/sale")
+    @ResponseBody
+    public Map<String,Object> sale(Long id){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            if (id!=null){
+                map.put("errorCode","0");
+                //根据id查单条
+                AppInfo appInfo = appService.selectAppInfoById(id);
+                Long status = appInfo.getStatus();
+                if (status==2||status==5){
+                    //上架 将status修改为4（已上架）
+                    appInfo.setStatus(4L);
+                    appService.updataAppInfo(appInfo);
+                    map.put("resultMsg","success");
+
+                }else if (status==4){
+                    //下架 将status修改为5 (已下架)
+                    appInfo.setStatus(5L);
+                    appService.updataAppInfo(appInfo);
+                    map.put("resultMsg","success");
+
+
+                }else {
+                    map.put("resultMsg","failed");
+                    //抛出异常
+                    throw new SaleException("App状态不能上架或下架");
+                }
+
+            }else if (id == null || "".equals(id)){
+                map.put("errorCode","param000001");
+            }
+
+
+            return map;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("errorCode","exception000001");
+            return map;
+        }
+
     }
 
 }

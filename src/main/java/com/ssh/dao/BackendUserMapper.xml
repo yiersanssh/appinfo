@@ -12,20 +12,34 @@
     <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
     <result column="userPassword" jdbcType="VARCHAR" property="userpassword" />
   </resultMap>
+
   <sql id="Base_Column_List">
     id, userCode, userName, userType, createdBy, creationDate, modifyBy, modifyDate, 
     userPassword
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from backend_user
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    select
+    b.id, userCode, userName, userType, b.createdBy, b.creationDate, b.modifyBy, b.modifyDate,
+    userPassword,d.valueName as usertypename
+    from backend_user b
+    left join (select * from data_dictionary where typeName='用户类型')d
+    on b.userType=d.valueId
+    where userCode=#{userCode} and userPassword=#{userPassword}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from backend_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
   <insert id="insert" parameterType="com.ssh.domain.BackendUser">
     insert into backend_user (id, userCode, userName, 
       userType, createdBy, creationDate, 
@@ -36,6 +50,7 @@
       #{modifyby,jdbcType=BIGINT}, #{modifydate,jdbcType=TIMESTAMP}, #{userpassword,jdbcType=VARCHAR}
       )
   </insert>
+
   <insert id="insertSelective" parameterType="com.ssh.domain.BackendUser">
     insert into backend_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -97,6 +112,9 @@
       </if>
     </trim>
   </insert>
+
+
+
   <update id="updateByPrimaryKeySelective" parameterType="com.ssh.domain.BackendUser">
     update backend_user
     <set>

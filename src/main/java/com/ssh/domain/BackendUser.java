@@ -21,6 +21,16 @@ public class BackendUser {
 
     private String userpassword;
 
+    private String usertypename;
+
+    public String getUsertypename() {
+        return usertypename;
+    }
+
+    public void setUsertypename(String usertypename) {
+        this.usertypename = usertypename;
+    }
+
     public Long getId() {
         return id;
     }

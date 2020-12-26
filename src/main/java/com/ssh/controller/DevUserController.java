@@ -16,22 +16,30 @@ public class DevUserController {
     private DevUserService devUserService;
 
     @RequestMapping("/dev/login")
-    public String login(){
+    public String login(HttpSession session){
+        //每次返回这个页面都将session清除
+        session.invalidate();
+
+
         return "devlogin";
     }
 
     @RequestMapping("/dologin")
     public ModelAndView doLogin(String devCode, String devPassword , HttpSession session){
-
         ModelAndView mv = new ModelAndView();
-        DevUser devUser = devUserService.dologin(devCode,devPassword);
 
-        if (devUser == null){
-            mv.addObject("error","用户名或密码错误！");
-            mv.setViewName("devlogin");
-        }else {
-            session.setAttribute("devUserSession",devUser);
+        if (session.getAttribute("devUserSession")!=null){
             mv.setViewName("developer/main");
+        }else {
+            DevUser devUser = devUserService.dologin(devCode,devPassword);
+
+            if (devUser == null){
+                mv.addObject("error","用户名或密码错误！");
+                mv.setViewName("devlogin");
+            }else {
+                session.setAttribute("devUserSession",devUser);
+                mv.setViewName("developer/main");
+            }
         }
 
         return mv;

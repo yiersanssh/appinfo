@@ -22,6 +22,8 @@
             <!-- 下面是配置不拦截的请求 -->
             <mvc:exclude-mapping path="/dev/login" />
             <mvc:exclude-mapping path="/dologin" />
+            <mvc:exclude-mapping path="/manager1/login" />
+            <mvc:exclude-mapping path="/managerDologin" />
             <bean class="com.ssh.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

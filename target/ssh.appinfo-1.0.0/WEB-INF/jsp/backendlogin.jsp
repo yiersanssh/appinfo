@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false" %>
+<%     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/"; %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <base href="<%=basePath%>">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
@@ -12,16 +14,16 @@
     <title>后台管理系统</title>
 
     <!-- Bootstrap -->
-    <link href="/statics/css/bootstrap.min.css" rel="stylesheet">
+    <link href="statics/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="/statics/css/font-awesome.min.css" rel="stylesheet">
+    <link href="statics/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="/statics/css/nprogress.css" rel="stylesheet">
+    <link href="statics/css/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="https://colorlib.com/polygon/gentelella/css/animate.min.css" rel="stylesheet">
+    <%--<link href="https://colorlib.com/polygon/gentelella/css/animate.min.css" rel="stylesheet">--%>
 
     <!-- Custom Theme Style -->
-    <link href="/statics/css/custom.min.css" rel="stylesheet">
+    <link href="statics/css/custom.min.css" rel="stylesheet">
   </head>
 
   <body class="login">
@@ -32,7 +34,7 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form action="dologin" method="post">
+            <form action="managerDologin" method="post">
               <h1>后台管理系统</h1>
               <div>
                 <input type="text" class="form-control" name="userCode" placeholder="请输入用户名" required="" />

@@ -42,8 +42,8 @@ public class DicServiceImpl implements DicService {
         map.put("flatFormList",appFlatFormList);
         map.put("publishStatusList",publishStatusList);
         map.put("categoryLevel1List",categoryLevel1List);
-        //map.put("categoryLevel2List",categoryLevel2List);
-        //map.put("categoryLevel3List",categoryLevel3List);
+        map.put("categoryLevel2List",categoryLevel2List);
+        map.put("categoryLevel3List",categoryLevel3List);
 
 
         return map;

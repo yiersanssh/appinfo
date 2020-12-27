@@ -25,4 +25,6 @@ public interface AppInfoMapper {
     AppInfo selectAppInfoById(Long id);
 
     AppInfo selectAppInfoMessage(Long id);
+
+    List<AppInfo> selectNoReviewAppInfo(AppInfo appInfo);
 }

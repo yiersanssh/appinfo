@@ -49,6 +49,7 @@ public class APPInfoController {
         List<AppInfo> appInfoList = appService.selectAppInfoByCondition(appInfo);
         mv.addObject("appInfoList",appInfoList);
 
+        //数据回显
         mv.addObject("querySoftwareName",querySoftwareName);
         mv.addObject("queryFlatformId",queryFlatformId);
         mv.addObject("queryStatus",queryStatus);

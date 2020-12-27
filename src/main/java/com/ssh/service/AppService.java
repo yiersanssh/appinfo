@@ -37,4 +37,6 @@ public interface AppService {
 
 
     int deleteAppinfo(Long id);
+
+    List<AppInfo> selectNoReviewAppInfo(AppInfo appInfo);
 }

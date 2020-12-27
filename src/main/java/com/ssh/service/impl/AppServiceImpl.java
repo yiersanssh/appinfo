@@ -149,5 +149,13 @@ public class AppServiceImpl implements AppService {
         return flag;
     }
 
+    @Override
+    public List<AppInfo> selectNoReviewAppInfo(AppInfo appInfo) {
+
+        List<AppInfo> appInfoList = appInfoMapper.selectNoReviewAppInfo(appInfo);
+
+        return appInfoList;
+    }
+
 
 }
